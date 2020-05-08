@@ -4,9 +4,8 @@ export default class Locker {
   }
 
   deposit(luggage) {
-    const number = this.boxes.push(luggage);
     return {
-      number,
+      number: this.boxes.push(luggage),
       password: Math.random(),
     };
   }
