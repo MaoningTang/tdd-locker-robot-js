@@ -19,7 +19,7 @@ export default class Locker {
   }
 
   pickup(ticket) {
-    if (this.boxes[ticket.number]) {
+    if (this.boxes[ticket.number] && this.boxes[ticket.number].password === ticket.password) {
       delete this.boxes[ticket.number];
       return 'Pickup successfully';
     }

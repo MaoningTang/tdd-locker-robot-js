@@ -44,3 +44,13 @@ test('should expire password when user enter a valid password twice given a lock
 
   expect(message).toEqual('Invalid password');
 });
+
+
+test('should notify wrong password when user enter an invalid password given a locker', () => {
+  const locker = new Locker(1);
+  const ticket = locker.deposit();
+
+  const message = locker.pickup({ number: ticket.number, password: 'fake' });
+
+  expect(message).toEqual('Invalid password');
+});
