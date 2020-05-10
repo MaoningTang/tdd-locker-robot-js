@@ -32,8 +32,9 @@ test('should notify pickup successful when user enter a valid password given a l
 
 test('should expire password when user enter a valid password twice given a locker with luggage', () => {
   Math.random = jest.fn().mockReturnValue('foo');
-  const locker = new Locker(1);
+  const locker = new Locker(2);
   const ticket = locker.deposit();
+  locker.deposit();
   expect(ticket).toEqual({
     number: 0,
     password: 'foo',
@@ -45,7 +46,6 @@ test('should expire password when user enter a valid password twice given a lock
   expect(message).toEqual('Invalid password');
 });
 
-
 test('should notify wrong password when user enter an invalid password given a locker', () => {
   const locker = new Locker(1);
   const ticket = locker.deposit();
@@ -53,4 +53,12 @@ test('should notify wrong password when user enter an invalid password given a l
   const message = locker.pickup({ number: ticket.number, password: 'fake' });
 
   expect(message).toEqual('Invalid password');
+});
+
+test('should notify locker is empty when user chose to pickup given an empty locker', () => {
+  const locker = new Locker(1);
+
+  const message = locker.pickup({ number: 1 , password: 'fake' });
+
+  expect(message).toEqual('The locker is empty.');
 });
