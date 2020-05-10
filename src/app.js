@@ -1,17 +1,29 @@
 export default class Locker {
   constructor(maxSize) {
-    this.boxes = [];
+    this.boxes = {};
     this.maxSize = maxSize;
   }
 
-  deposit(luggage) {
-    if (this.boxes.length == this.maxSize){
-      const errorMessage = 'The locker is full.';
-      return errorMessage;
+  deposit() {
+    if (Object.keys(this.boxes).length === this.maxSize) {
+      return 'The locker is full.';
     }
-    return {
-      number: this.boxes.push(luggage),
-      password: Math.random(),
-    };
+
+    const password = Math.random();
+    const number = Object.keys(this.boxes).length;
+    const data = { password, number };
+
+    this.boxes[number] = data;
+
+    return data;
+  }
+
+  pickup(ticket) {
+    if (!this.boxes[ticket.number] || this.boxes[ticket.number].password !== ticket.password) {
+      return 'Invalid password';
+    }
+
+    delete this.boxes[ticket.number];
+    return 'Pickup successfully';
   }
 }
