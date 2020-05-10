@@ -1,18 +1,21 @@
 export default class Locker {
   constructor(maxSize) {
-    this.boxes = [];
+    this.boxes = {};
     this.maxSize = maxSize;
   }
 
-  deposit(luggage) {
-    if (this.boxes.length === this.maxSize) {
+  deposit() {
+    if (Object.keys(this.boxes).length === this.maxSize) {
       return 'The locker is full.';
     }
 
-    return {
-      number: this.boxes.push(luggage),
-      password: Math.random(),
-    };
+    const password = Math.random();
+    const number = Object.keys(this.boxes).length;
+    const data = { password, number };
+
+    this.boxes[number] = data;
+
+    return data;
   }
 
   pickup(ticket) {
