@@ -19,6 +19,11 @@ export default class Locker {
   }
 
   pickup(ticket) {
-    return 'Pickup successfully';
+    if (this.boxes[ticket.number]) {
+      delete this.boxes[ticket.number];
+      return 'Pickup successfully';
+    }
+
+    return 'Invalid password';
   }
 }
