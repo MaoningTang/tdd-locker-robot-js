@@ -14,4 +14,8 @@ export default class Locker {
       password: Math.random(),
     };
   }
+
+  pickup(ticket) {
+    return 'Pickup successfully';
+  }
 }
