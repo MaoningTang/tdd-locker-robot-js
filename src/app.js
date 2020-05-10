@@ -19,11 +19,11 @@ export default class Locker {
   }
 
   pickup(ticket) {
-    if (this.boxes[ticket.number] && this.boxes[ticket.number].password === ticket.password) {
-      delete this.boxes[ticket.number];
-      return 'Pickup successfully';
+    if (!this.boxes[ticket.number] || this.boxes[ticket.number].password !== ticket.password) {
+      return 'Invalid password';
     }
 
-    return 'Invalid password';
+    delete this.boxes[ticket.number];
+    return 'Pickup successfully';
   }
 }
