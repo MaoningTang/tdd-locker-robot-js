@@ -9,11 +9,9 @@ export default class Locker {
       return 'The locker is full.';
     }
 
-    const password = Math.random();
-    const number = Object.keys(this.boxes).length;
-    const data = { password, number };
+    const data = { password: Math.random(), number: Object.keys(this.boxes).length };
 
-    this.boxes[number] = data;
+    this.boxes[data.number] = data;
 
     return data;
   }
@@ -23,7 +21,8 @@ export default class Locker {
       return 'The locker is empty.';
     }
 
-    if (!this.boxes[ticket.number] || this.boxes[ticket.number].password !== ticket.password) {
+    const savedTicket = this.boxes[ticket.number]
+    if (!savedTicket || savedTicket.password !== ticket.password) {
       return 'Invalid password';
     }
 
