@@ -19,6 +19,10 @@ export default class Locker {
   }
 
   pickup(ticket) {
+    if (!Object.keys(this.boxes).length) {
+      return 'The locker is empty.';
+    }
+
     if (!this.boxes[ticket.number] || this.boxes[ticket.number].password !== ticket.password) {
       return 'Invalid password';
     }
