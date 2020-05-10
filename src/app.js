@@ -5,10 +5,10 @@ export default class Locker {
   }
 
   deposit(luggage) {
-    if (this.boxes.length == this.maxSize){
-      const errorMessage = 'The locker is full.';
-      return errorMessage;
+    if (this.boxes.length === this.maxSize) {
+      return 'The locker is full.';
     }
+
     return {
       number: this.boxes.push(luggage),
       password: Math.random(),
