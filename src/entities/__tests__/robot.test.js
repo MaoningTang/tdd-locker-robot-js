@@ -1,4 +1,5 @@
 import Robot from '../robot';
+import Locker from "../locker";
 
 let realRandom;
 
@@ -12,7 +13,7 @@ afterEach(() => {
 })
 
 test('should return a ticket when deposit a luggage given a robot', () => {
-  const robot = new Robot(1);
+  const robot = new Robot([new Locker(1)]);
 
   const ticket = robot.deposit({});
 
@@ -24,10 +25,7 @@ test('should return a ticket when deposit a luggage given a robot', () => {
 });
 
 test('should save luggage to first available locker when deposit a luggage given a robot', () => {
-  const robot = new Robot(2);
-  robot.deposit({});
-  robot.deposit({});
-  robot.deposit({});
+  const robot = new Robot([new Locker(1), new Locker(1)]);
   robot.deposit({});
 
   const ticket = robot.deposit({});
@@ -40,10 +38,7 @@ test('should save luggage to first available locker when deposit a luggage given
 });
 
 test('should return a full locker message when user deposit a luggage given a robot without available locker' , () => {
-  const robot = new Robot(1);
-  robot.deposit({});
-  robot.deposit({});
-  robot.deposit({});
+  const robot = new Robot([new Locker(1)]);
   robot.deposit({});
 
   const ticket = robot.deposit({});
@@ -52,7 +47,7 @@ test('should return a full locker message when user deposit a luggage given a ro
 });
 
 test('should return the correct luggage when user pickup with valid ticket given a robot' , () => {
-  const robot = new Robot(1);
+  const robot = new Robot([new Locker(1)]);
   const ticket = robot.deposit({ foo: 'bag' });
 
   const luggage = robot.pickup(ticket);
@@ -61,7 +56,7 @@ test('should return the correct luggage when user pickup with valid ticket given
 });
 
 test('should return a invalid ticket message when user pickup with invalid ticket given a robot' , () => {
-  const robot = new Robot(1);
+  const robot = new Robot([new Locker(1)]);
   robot.deposit({});
 
   const message = robot.pickup({

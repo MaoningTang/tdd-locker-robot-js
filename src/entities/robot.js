@@ -1,10 +1,6 @@
-import Locker from './locker';
-
-const DEFAULT_LOCKER_SIZE = 4;
-
 export default class Robot {
-  constructor(maxLockers) {
-    this.lockers = getArrayFillWithLocker(maxLockers)
+  constructor(lockers) {
+    this.lockers = lockers;
   }
 
   deposit(luggage) {
@@ -40,12 +36,3 @@ const depositLuggageToAvailableLocker = (lockers, luggage) =>
 
       return acc;
     }, undefined);
-
-const getArrayFillWithLocker = (length) => {
-  const array = [];
-  for (let i =0; i < length; i++) {
-    array.push(new Locker(DEFAULT_LOCKER_SIZE));
-  }
-
-  return array;
-};
