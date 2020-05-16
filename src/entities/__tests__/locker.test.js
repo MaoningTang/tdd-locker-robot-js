@@ -20,7 +20,7 @@ test('should notify locker is full when user deposit a luggage given a full lock
   expect(message).toEqual('The locker is full.');
 });
 
-test('should return the correct luggage when user enter a valid password given a locker with luggage', () => {
+test('should return the correct luggage when user enter a valid ticket given a locker with luggage', () => {
   const locker = new Locker(1);
   const ticket = locker.deposit({ foo: 'bag' });
 
@@ -29,7 +29,7 @@ test('should return the correct luggage when user enter a valid password given a
   expect(luggage).toEqual({ foo: 'bag' });
 });
 
-test('should expire password when user enter a valid password twice given a locker with luggage', () => {
+test('should expire ticket when user enter a valid ticket twice given a locker with luggage', () => {
   Math.random = jest.fn().mockReturnValue('foo');
   const locker = new Locker(2);
   const ticket = locker.deposit({});
@@ -42,14 +42,14 @@ test('should expire password when user enter a valid password twice given a lock
   locker.pickup(ticket);
   const message = locker.pickup(ticket);
 
-  expect(message).toEqual('Invalid password');
+  expect(message).toEqual('Invalid Ticket');
 });
 
-test('should notify wrong password when user enter an invalid password given a locker', () => {
+test('should notify wrong ticket when user enter an invalid ticket given a locker', () => {
   const locker = new Locker(1);
   const ticket = locker.deposit({});
 
   const message = locker.pickup({ number: ticket.number, password: 'fake' });
 
-  expect(message).toEqual('Invalid password');
+  expect(message).toEqual('Invalid Ticket');
 });

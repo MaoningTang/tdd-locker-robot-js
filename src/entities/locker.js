@@ -19,7 +19,7 @@ export default class Locker {
   pickup(ticket) {
     const savedData = this.boxes[ticket.number];
     if (!savedData || savedData.ticket.password !== ticket.password) {
-      return 'Invalid password';
+      return 'Invalid Ticket';
     }
 
     delete this.boxes[ticket.number];
