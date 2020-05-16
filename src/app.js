@@ -17,10 +17,6 @@ export default class Locker {
   }
 
   pickup(ticket) {
-    if (!Object.keys(this.boxes).length) {
-      return 'The locker is empty.';
-    }
-
     const savedData = this.boxes[ticket.number];
     if (!savedData || savedData.ticket.password !== ticket.password) {
       return 'Invalid password';

@@ -54,11 +54,3 @@ test('should notify wrong password when user enter an invalid password given a l
 
   expect(message).toEqual('Invalid password');
 });
-
-test('should notify locker is empty when user chose to pickup given an empty locker', () => {
-  const locker = new Locker(1);
-
-  const message = locker.pickup({ number: 1, password: 'fake' });
-
-  expect(message).toEqual('The locker is empty.');
-});
