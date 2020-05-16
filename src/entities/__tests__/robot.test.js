@@ -51,11 +51,24 @@ test('should return a full locker message when user deposit a luggage given a ro
   expect(ticket).toEqual('The lockers are full.');
 });
 
-test('should return return the correct luggage when user user pickup with valid ticket' , () => {
+test('should return the correct luggage when user pickup with valid ticket given a robot' , () => {
   const robot = new Robot(1);
   const ticket = robot.deposit({ foo: 'bag' });
 
   const luggage = robot.pickup(ticket);
 
   expect(luggage).toEqual({ foo: 'bag' });
+});
+
+test('should return a invalid ticket message when user pickup with invalid ticket given a robot' , () => {
+  const robot = new Robot(1);
+  robot.deposit({});
+
+  const message = robot.pickup({
+    lockerNumber: 100,
+    number: 0,
+    password: 'foo',
+  });
+
+  expect(message).toEqual('Invalid Ticket');
 });

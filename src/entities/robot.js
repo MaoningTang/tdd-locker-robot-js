@@ -18,7 +18,11 @@ export default class Robot {
   }
 
   pickup(ticket) {
-      return this.lockers[ticket.lockerNumber].pickup(ticket);
+      if (this.lockers[ticket.lockerNumber]){
+          return this.lockers[ticket.lockerNumber].pickup(ticket);
+      } else{
+          return 'Invalid Ticket';
+      }
   }
 }
 
