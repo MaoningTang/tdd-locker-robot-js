@@ -42,3 +42,13 @@ test('should return a full locker message when user deposit a luggage given a ro
 
   expect(ticket).toEqual('The lockers are full.');
 });
+
+test('should return return the correct luggage when user user pickup with valid ticket' , () => {
+  Math.random = jest.fn().mockReturnValue('foo');
+  const robot = new Robot(1);
+  const ticket = robot.deposit({ foo: 'bag' });
+
+  const luggage = robot.pickup(ticket);
+
+  expect(luggage).toEqual({ foo: 'bag' });
+});

@@ -16,6 +16,10 @@ export default class Robot {
 
     return result;
   }
+
+  pickup(ticket) {
+      return this.lockers[ticket.lockerNumber].pickup(ticket);
+  }
 }
 
 const depositLuggageToAvailableLocker = (lockers, luggage) =>
