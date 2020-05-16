@@ -8,7 +8,18 @@ export default class Robot {
   }
 
   deposit(luggage) {
-    const result = this.lockers.reduce((acc, locker, index) => {
+    const result = depositLuggageToAvailableLocker(this.lockers, luggage);
+
+    if (!result) {
+      return 'The lockers are full.'
+    }
+
+    return result;
+  }
+}
+
+const depositLuggageToAvailableLocker = (lockers, luggage) =>
+    lockers.reduce((acc, locker, index) => {
       if (acc) {
         return acc;
       }
@@ -21,14 +32,6 @@ export default class Robot {
 
       return acc;
     }, undefined);
-
-    if (!result) {
-      return 'The lockers are full.'
-    }
-
-    return result;
-  }
-}
 
 const getArrayFillWithLocker = (length) => {
   const array = [];
