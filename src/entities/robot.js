@@ -3,12 +3,12 @@ import Locker from './locker';
 const DEFAULT_LOCKER_SIZE = 4;
 
 export default class Robot {
-  constructor() {
-    this.lockers = [new Locker(DEFAULT_LOCKER_SIZE), new Locker(DEFAULT_LOCKER_SIZE)];
+  constructor(maxLockers) {
+    this.lockers = getArrayFillWithLocker(maxLockers)
   }
 
   deposit(luggage) {
-    return this.lockers.reduce((acc, locker, index) => {
+    const result = this.lockers.reduce((acc, locker, index) => {
       if (acc) {
         return acc;
       }
@@ -21,5 +21,20 @@ export default class Robot {
 
       return acc;
     }, undefined);
+
+    if (!result) {
+      return 'The lockers are full.'
+    }
+
+    return result;
   }
 }
+
+const getArrayFillWithLocker = (length) => {
+  const array = [];
+  for (let i =0; i < length; i++) {
+    array.push(new Locker(DEFAULT_LOCKER_SIZE));
+  }
+
+  return array;
+};

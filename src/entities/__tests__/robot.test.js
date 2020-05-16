@@ -2,7 +2,7 @@ import Robot from '../robot';
 
 test('should return a ticket when deposit a luggage given a robot', () => {
   Math.random = jest.fn().mockReturnValue('foo');
-  const robot = new Robot();
+  const robot = new Robot(1);
 
   const ticket = robot.deposit({});
 
@@ -15,7 +15,7 @@ test('should return a ticket when deposit a luggage given a robot', () => {
 
 test('should save luggage to first available locker when deposit a luggage given a robot', () => {
   Math.random = jest.fn().mockReturnValue('foo');
-  const robot = new Robot();
+  const robot = new Robot(2);
   robot.deposit({});
   robot.deposit({});
   robot.deposit({});
@@ -28,4 +28,17 @@ test('should save luggage to first available locker when deposit a luggage given
     number: 0,
     password: 'foo',
   });
+});
+
+test('should return a full locker message when user deposit a luggage given a robot without available locker' , () => {
+  Math.random = jest.fn().mockReturnValue('foo');
+  const robot = new Robot(1);
+  robot.deposit({});
+  robot.deposit({});
+  robot.deposit({});
+  robot.deposit({});
+
+  const ticket = robot.deposit({});
+
+  expect(ticket).toEqual('The lockers are full.');
 });
