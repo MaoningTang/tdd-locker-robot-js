@@ -1,4 +1,4 @@
-import Locker from '../app';
+import Locker from '../locker';
 
 test('should print a ticket when user deposit a luggage given a locker with empty boxes', () => {
   Math.random = jest.fn().mockReturnValue('foo');
@@ -19,7 +19,6 @@ test('should notify locker is full when user deposit a luggage given a full lock
 
   expect(message).toEqual('The locker is full.');
 });
-
 
 test('should return the correct luggage when user enter a valid password given a locker with luggage', () => {
   const locker = new Locker(1);
