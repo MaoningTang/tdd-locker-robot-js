@@ -65,3 +65,13 @@ test('should save luggage to the max available capacity locker when user deposit
 
   expect(maxAvailableCapacityLocker.pickup(ticket)).toEqual(expectedSavedLuggage);
 });
+
+test('should save luggage to the first max available capacity locker when user deposit a luggage given a robot with available lockers have equal max capacity', () => {
+  const firstMaxAvailableCapacityLocker = new Locker(3);
+  const robot = new SmartRobot([new Locker(2), firstMaxAvailableCapacityLocker, new Locker(3)]);
+  const expectedSavedLuggage = { foo: 'bar' };
+
+  const ticket = robot.deposit(expectedSavedLuggage);
+
+  expect(firstMaxAvailableCapacityLocker.pickup(ticket)).toEqual(expectedSavedLuggage);
+});
