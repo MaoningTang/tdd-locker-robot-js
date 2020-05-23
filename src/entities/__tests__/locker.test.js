@@ -53,3 +53,13 @@ test('should notify wrong ticket when user enter an invalid ticket given a locke
 
   expect(message).toEqual('Invalid Ticket');
 });
+
+test('should return available capacity when get available capacity given a locker', () => {
+  const locker = new Locker(3);
+  const luggage = { foo: 'bar' };
+  locker.deposit(luggage);
+
+  const availableCapacity = locker.getAvailableCapacity();
+
+  expect(availableCapacity).toEqual(2);
+});

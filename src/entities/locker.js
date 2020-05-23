@@ -25,4 +25,8 @@ export default class Locker {
     delete this.boxes[ticket.number];
     return savedData.luggage;
   }
+
+  getAvailableCapacity() {
+    return this.maxSize - Object.keys(this.boxes).length;
+  }
 }
