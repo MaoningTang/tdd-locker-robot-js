@@ -4,35 +4,31 @@ export default class SmartRobot {
   }
 
   deposit(luggage) {
-    const result = depositLuggageToAvailableLocker(this.lockers, luggage);
+    const maxAvailableCapacityLocker = findMaxAvailableCapacityLocker(this.lockers);
 
-    if (!result) {
-      return 'The lockers are full.'
+    const result = maxAvailableCapacityLocker.locker.deposit(luggage);
+    if(result === 'The locker is full.') {
+      return 'The lockers are full.';
     }
 
-    return result;
+    if (result.number == null) {
+      return result;
+    }
+
+    return { ...result, lockerNumber: maxAvailableCapacityLocker.index};
   }
 
   pickup(ticket) {
-      if (!this.lockers[ticket.lockerNumber]) {
-          return 'Invalid Ticket';
-      }
+    if (!this.lockers[ticket.lockerNumber]) {
+      return 'Invalid Ticket';
+    }
 
-      return this.lockers[ticket.lockerNumber].pickup(ticket);
+    return this.lockers[ticket.lockerNumber].pickup(ticket);
   }
 }
 
-const depositLuggageToAvailableLocker = (lockers, luggage) =>
-    lockers.reduce((acc, locker, index) => {
-      if (acc) {
-        return acc;
-      }
-
-      const result = locker.deposit(luggage);
-
-      if (result.number != null) {
-        acc = { ...result, lockerNumber: index };
-      }
-
-      return acc;
-    }, undefined);
+function findMaxAvailableCapacityLocker(lockers) {
+  return lockers
+      .map((v, index) => ({locker: v, availableCapacity: v.getAvailableCapacity(), index}))
+      .reduce((max, v) => max.availableCapacity < v.availableCapacity ? v : max)
+}

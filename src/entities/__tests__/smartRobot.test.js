@@ -54,3 +54,14 @@ test('should return a invalid ticket message when user pickup given a smart robo
 
   expect(message).toEqual('Invalid Ticket');
 });
+
+
+test('should save luggage to the max available capacity locker when user deposit a luggage given a robot with available lockers', () => {
+  const maxAvailableCapacityLocker = new Locker(3);
+  const robot = new SmartRobot([new Locker(1), maxAvailableCapacityLocker, new Locker(2)]);
+  const expectedSavedLuggage = { foo: 'bar' };
+
+  const ticket = robot.deposit(expectedSavedLuggage);
+
+  expect(maxAvailableCapacityLocker.pickup(ticket)).toEqual(expectedSavedLuggage);
+});
