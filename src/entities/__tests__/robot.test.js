@@ -1,16 +1,16 @@
 import Robot from '../robot';
-import Locker from "../locker";
+import Locker from '../locker';
 
 let realRandom;
 
 beforeEach(() => {
   realRandom = Math.random;
   Math.random = jest.fn().mockReturnValue('foo');
-})
+});
 
 afterEach(() => {
   Math.random = realRandom;
-})
+});
 
 test('should return a ticket when deposit a luggage given a robot', () => {
   const robot = new Robot([new Locker(1)]);
@@ -24,20 +24,19 @@ test('should return a ticket when deposit a luggage given a robot', () => {
   });
 });
 
-test('should save luggage to first available locker when deposit a luggage given a robot', () => {
-  const robot = new Robot([new Locker(1), new Locker(1)]);
-  robot.deposit({});
+test('should save luggage in order when deposit a luggage given a robot with available locker', () => {
+  const fullLocker = new Locker(1);
+  fullLocker.deposit({});
+  const availableLocker = new Locker(1);
+  const robot = new Robot([fullLocker, availableLocker]);
+  const expectedSavedLuggage = { foo: 'bar' };
 
-  const ticket = robot.deposit({});
+  const ticket = robot.deposit(expectedSavedLuggage);
 
-  expect(ticket).toEqual({
-    lockerNumber: 1,
-    number: 0,
-    password: 'foo',
-  });
+  expect(availableLocker.pickup(ticket)).toEqual(expectedSavedLuggage);
 });
 
-test('should return a full locker message when user deposit a luggage given a robot without available locker' , () => {
+test('should return a full locker message when user deposit a luggage given a robot without available locker', () => {
   const robot = new Robot([new Locker(1)]);
   robot.deposit({});
 
@@ -46,7 +45,7 @@ test('should return a full locker message when user deposit a luggage given a ro
   expect(ticket).toEqual('The lockers are full.');
 });
 
-test('should return the correct luggage when user pickup with valid ticket given a robot' , () => {
+test('should return the correct luggage when user pickup given a robot and a valid ticket', () => {
   const robot = new Robot([new Locker(1)]);
   const ticket = robot.deposit({ foo: 'bag' });
 
@@ -55,7 +54,7 @@ test('should return the correct luggage when user pickup with valid ticket given
   expect(luggage).toEqual({ foo: 'bag' });
 });
 
-test('should return a invalid ticket message when user pickup with invalid ticket given a robot' , () => {
+test('should return a invalid ticket message when user pickup given a robot and a invalid ticket', () => {
   const robot = new Robot([new Locker(1)]);
   robot.deposit({});
 
