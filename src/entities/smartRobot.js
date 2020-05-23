@@ -5,17 +5,11 @@ export default class SmartRobot {
 
   deposit(luggage) {
     const maxAvailableCapacityLocker = findMaxAvailableCapacityLocker(this.lockers);
-
     if (!maxAvailableCapacityLocker.availableCapacity) {
       return 'The lockers are full.';
     }
 
     const result = maxAvailableCapacityLocker.locker.deposit(luggage);
-
-    if (result.number == null) {
-      return result;
-    }
-
     return { ...result, lockerNumber: maxAvailableCapacityLocker.index};
   }
 
