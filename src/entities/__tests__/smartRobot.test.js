@@ -12,7 +12,7 @@ afterEach(() => {
   Math.random = realRandom;
 });
 
-test('should return a ticket when deposit a luggage given a smart robot', () => {
+test('should return a ticket when deposit a luggage given a smart robot with one locker', () => {
   const robot = new SmartRobot([new Locker(1)]);
 
   const ticket = robot.deposit({});
@@ -24,7 +24,7 @@ test('should return a ticket when deposit a luggage given a smart robot', () => 
   });
 });
 
-test('should return a full locker message when user deposit a luggage given a smart robot without available locker', () => {
+test('should return a full locker message when user deposit a luggage given a smart robot with one full locker', () => {
   const robot = new SmartRobot([new Locker(1)]);
   robot.deposit({});
 
@@ -33,7 +33,7 @@ test('should return a full locker message when user deposit a luggage given a sm
   expect(ticket).toEqual('The lockers are full.');
 });
 
-test('should return the correct luggage when user pickup given a smart robot and a valid ticket', () => {
+test('should return the correct luggage when user pickup given a smart robot with one locker and a valid ticket', () => {
   const robot = new SmartRobot([new Locker(1)]);
   const ticket = robot.deposit({ foo: 'bag' });
 
@@ -42,7 +42,7 @@ test('should return the correct luggage when user pickup given a smart robot and
   expect(luggage).toEqual({ foo: 'bag' });
 });
 
-test('should return a invalid ticket message when user pickup given a smart robot and a invalid ticket', () => {
+test('should return a invalid ticket message when user pickup given a smart robot with one locker and a invalid ticket', () => {
   const robot = new SmartRobot([new Locker(1)]);
   robot.deposit({});
 
@@ -56,22 +56,23 @@ test('should return a invalid ticket message when user pickup given a smart robo
 });
 
 
-test('should save luggage to the max available capacity locker when user deposit a luggage given a robot with available lockers', () => {
-  const maxAvailableCapacityLocker = new Locker(3);
-  const robot = new SmartRobot([new Locker(1), maxAvailableCapacityLocker, new Locker(2)]);
+test('should save luggage to lockerB when user deposit a luggage given a robot with three lockers and lockerB has max capacity', () => {
+  const lockerB = new Locker(3);
+  const robot = new SmartRobot([new Locker(1), lockerB, new Locker(2)]);
   const expectedSavedLuggage = { foo: 'bar' };
 
   const ticket = robot.deposit(expectedSavedLuggage);
 
-  expect(maxAvailableCapacityLocker.pickup(ticket)).toEqual(expectedSavedLuggage);
+  expect(lockerB.pickup(ticket)).toEqual(expectedSavedLuggage);
 });
 
-test('should save luggage to the first max available capacity locker when user deposit a luggage given a robot with available lockers have equal max capacity', () => {
-  const firstMaxAvailableCapacityLocker = new Locker(3);
-  const robot = new SmartRobot([new Locker(2), firstMaxAvailableCapacityLocker, new Locker(3)]);
+test('should save luggage to lockerA when user deposit a luggage given a robot with three lockers and lockerA and lockerB has equal max capacity', () => {
+  const lockerA = new Locker(3);
+  const lockerB = new Locker(3);
+  const robot = new SmartRobot([new Locker(2), lockerA, lockerB]);
   const expectedSavedLuggage = { foo: 'bar' };
 
   const ticket = robot.deposit(expectedSavedLuggage);
 
-  expect(firstMaxAvailableCapacityLocker.pickup(ticket)).toEqual(expectedSavedLuggage);
+  expect(lockerA.pickup(ticket)).toEqual(expectedSavedLuggage);
 });

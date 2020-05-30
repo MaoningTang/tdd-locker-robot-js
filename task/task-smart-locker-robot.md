@@ -1,8 +1,8 @@
 # Tasking
 
-- Given a robot; When user deposit a luggage; Then return a ticket. - done
-- Given a robot without available locker; When user deposit a luggage; Then return a full locker message. - done
-- Given a robot with valid ticket; When user pickup; Then return the correct luggage. - done
-- Given a robot with invalid ticket; When user pickup; Then return a invalid ticket message. - done
-- Given a robot with available lockers, when user deposit a luggage; Then save it to max capacity locker. - done
-- Given a robot with lockers have equal max capacity, when user deposit a luggage; Then save it to the first max capacity locker. - done
+- Given a robot with one locker; When user deposit a luggage; Then return a ticket. - done
+- Given a robot with one full locker; When user deposit a luggage; Then return a full locker message. - done
+- Given a robot with one locker and a valid ticket; When user pickup; Then return the correct luggage. - done
+- Given a robot with one locker and a invalid ticket; When user pickup; Then return a invalid ticket message. - done
+- Given a robot with three lockers and lockerB has max capacity, when user deposit a luggage; Then save it lockerB. - done
+- Given a robot with three lockers and lockerA and lockerB has equal max capacity, when user deposit a luggage; Then save it to lockerA. - done
