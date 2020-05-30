@@ -1,5 +1,6 @@
 import SuperRobot from '../superRobot';
 import Locker from '../locker';
+import SmartRobot from "../smartRobot";
 
 let realRandom;
 
@@ -67,4 +68,20 @@ test('should save luggage to lockerB when user deposit a luggage given a robot w
   const ticket = robot.deposit(expectedSavedLuggage);
 
   expect(lockerB.pickup(ticket)).toEqual(expectedSavedLuggage);
+});
+
+test('should save luggage to lockerA when user deposit a luggage given a robot with three lockers and lockerA and lockerB has equal vacancy rate', () => {
+  const lockerA = new Locker(3);
+  lockerA.deposit({});
+  const lockerB = new Locker(3);
+  lockerB.deposit({});
+  const lockerC = new Locker(5);
+  lockerC.deposit({});
+  lockerC.deposit({});
+  const robot = new SuperRobot([lockerA, lockerB, lockerC]);
+  const expectedSavedLuggage = { foo: 'bar' };
+
+  const ticket = robot.deposit(expectedSavedLuggage);
+
+  expect(lockerA.pickup(ticket)).toEqual(expectedSavedLuggage);
 });

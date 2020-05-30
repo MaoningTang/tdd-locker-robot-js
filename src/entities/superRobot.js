@@ -25,5 +25,5 @@ export default class SuperRobot {
 function findMaxVacancyRateLocker(lockers) {
   return lockers
       .map((v, index) => ({locker: v, availableCapacity: v.getAvailableCapacity(), vacancyRate: v.getVacancyRate(), index}))
-      .reduce((max, v) => max.vacancyRate < v.vacancyRate ? v : max)
+      .reduce((max, v) => v.vacancyRate - max.vacancyRate > 0.01 ? v : max)
 }
