@@ -4,13 +4,13 @@ export default class SuperRobot {
   }
 
   deposit(luggage) {
-    const maxAvailableCapacityLocker = findMaxAvailableCapacityLocker(this.lockers);
-    if (!maxAvailableCapacityLocker.availableCapacity) {
+    const maxVacancyRateLocker = findMaxVacancyRateLocker(this.lockers);
+    if (!maxVacancyRateLocker.availableCapacity) {
       return 'The lockers are full.';
     }
 
-    const result = maxAvailableCapacityLocker.locker.deposit(luggage);
-    return { ...result, lockerNumber: maxAvailableCapacityLocker.index};
+    const result = maxVacancyRateLocker.locker.deposit(luggage);
+    return { ...result, lockerNumber: maxVacancyRateLocker.index};
   }
 
   pickup(ticket) {
@@ -22,8 +22,8 @@ export default class SuperRobot {
   }
 }
 
-function findMaxAvailableCapacityLocker(lockers) {
+function findMaxVacancyRateLocker(lockers) {
   return lockers
-      .map((v, index) => ({locker: v, availableCapacity: v.getAvailableCapacity(), index}))
-      .reduce((max, v) => max.availableCapacity < v.availableCapacity ? v : max)
+      .map((v, index) => ({locker: v, availableCapacity: v.getAvailableCapacity(), vacancyRate: v.getVacancyRate(), index}))
+      .reduce((max, v) => max.vacancyRate < v.vacancyRate ? v : max)
 }

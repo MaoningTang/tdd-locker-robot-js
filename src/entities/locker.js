@@ -29,4 +29,8 @@ export default class Locker {
   getAvailableCapacity() {
     return this.maxSize - Object.keys(this.boxes).length;
   }
+
+  getVacancyRate() {
+    return this.getAvailableCapacity() / this.maxSize;
+  }
 }

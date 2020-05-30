@@ -54,3 +54,17 @@ test('should return a invalid ticket message when user pickup given a super robo
 
   expect(message).toEqual('Invalid Ticket');
 });
+
+test('should save luggage to lockerB when user deposit a luggage given a robot with three lockers and lockerB has vacancy rate', () => {
+  const lockerA = new Locker(2);
+  lockerA.deposit({});
+  const lockerB = new Locker(3);
+  const lockerC = new Locker(5);
+  lockerC.deposit({});
+  const robot = new SuperRobot([lockerA, lockerB, lockerC]);
+  const expectedSavedLuggage = { foo: 'bar' };
+
+  const ticket = robot.deposit(expectedSavedLuggage);
+
+  expect(lockerB.pickup(ticket)).toEqual(expectedSavedLuggage);
+});
